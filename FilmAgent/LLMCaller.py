@@ -36,9 +36,9 @@ def GPTCall(prompt):
 
 def GPTTTS(text, role):
     
-    openai.api_key = api_key
-    openai.organization = organization
-    client = OpenAI(api_key = api_key, organization = organization)
+    # openai.api_key = api_key
+    # openai.organization = organization
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE"))
     response = client.audio.speech.create(
         model = "tts-1",
         voice = role,
