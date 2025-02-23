@@ -5,7 +5,7 @@ import random
 import copy
 
 # TO DO
-ROOT_PATH = "/path/to/FilmAgent"
+ROOT_PATH = "/Users/huangdon/Documents/FilmAgent/FilmAgent"
 ID = 13
 # TO DO
 
@@ -15,11 +15,11 @@ class FilmCrafter:
     
     def __init__(self, topic: str) -> None:
         self.topic = topic
-        self.store_path = os.path.join(ROOT_PATH, f"store\\no_interation\{ID}")
+        self.store_path = os.path.join(ROOT_PATH, "store", "no_interation", f"{ID}")
         self.log_path = os.path.join(self.store_path, "prompt.txt")
         self.profile_path = os.path.join(self.store_path, "actors_profile.json") 
-        self.action_description_path = os.path.join(ROOT_PATH, "Locations\\actions.txt")
-        self.shot_description_path = os.path.join(ROOT_PATH, "Locations\\shots.txt")
+        self.action_description_path = os.path.join(ROOT_PATH, "Locations", "actions.txt")
+        self.shot_description_path = os.path.join(ROOT_PATH, "Locations", "shots.txt")
         # scenes
         self.scene_path = os.path.join(self.store_path, "scenes_1.json") 
         # + lines
@@ -51,7 +51,7 @@ class FilmCrafter:
         
 
     def call(self, identity: str, params: Dict, trans2json: bool = True) -> Union[str, dict, list]:
-        prompt = read_prompt(os.path.join(ROOT_PATH, f"Prompt\{identity}.txt") )
+        prompt = read_prompt(os.path.join(ROOT_PATH, "Prompt", f"{identity}.txt") )
         prompt = prompt_format(prompt, params)
         log_prompt(self.log_path, prompt)
         result = GPTCall(prompt)
@@ -157,7 +157,7 @@ class FilmCrafter:
 
             script_information = script_information + f"{i}. **Scene {i}**:\n   - characters: {who}\n   - location: {where}\n   - plot: {what}\n\n"
             
-            position_path = os.path.join(ROOT_PATH, f"Locations\{where}\position.json")
+            position_path = os.path.join(ROOT_PATH, "Locations", f"{where}", "position.json")
             positions = read_json(position_path)
             normal_position = [item for item in positions if item['fixed_angle'] == False]
             # This "if judgment" is related to the position, and camera settings in Unity.
@@ -194,7 +194,7 @@ class FilmCrafter:
         all_actions = read_prompt(self.action_description_path)
         data = []
         for scene in scenes:
-            position_path = os.path.join(ROOT_PATH, f"Locations\{scene['scene_information']['where']}\position.json")
+            position_path = os.path.join(ROOT_PATH, "Locations", f"{scene['scene_information']['where']}", "position.json")
             positions = read_json(position_path)
             
             ini = ""
@@ -243,7 +243,7 @@ class FilmCrafter:
                 1. All movable characters (i.e., the characters that remain standing throughout the script)
                 2. All positions that character can move to (i.e., the unoccupied positions)
         '''
-        position_path = os.path.join(ROOT_PATH, f"Locations\{scene[return_most_similar('scene_information', list(scene.keys()))]['where']}\position.json")
+        position_path = os.path.join(ROOT_PATH, "Locations", f"{scene[return_most_similar('scene_information', list(scene.keys()))]['where']}", "position.json")
         positions = read_json(position_path)
         occupied_positions = [get_number(item['position']) for item in scene[return_most_similar('initial position', list(scene.keys()))]]
         unoccupied_positions = [f"{item['id']}: {item['description']}" for item in positions if get_number(item['id']) not in occupied_positions]
@@ -409,11 +409,11 @@ class FilmCrafter:
         scenes = read_json(self.scene_path_5)
         profiles = read_json(self.profile_path)
         v_characters = [item['name'] for item in profiles]
-        info = read_json(os.path.join(ROOT_PATH, "Locations\\rotateandtrack.json"))
+        info = read_json(os.path.join(ROOT_PATH, "Locations", "rotateandtrack.json"))
         v_locations = [location for location in info.keys()]
-        info_1 = read_json(os.path.join(ROOT_PATH, "Locations\\actions.json"))
+        info_1 = read_json(os.path.join(ROOT_PATH, "Locations", "actions.json"))
         v_actions = [action for action in info_1.keys()]
-        info_2 = read_json(os.path.join(ROOT_PATH, "Locations\\shots.json"))
+        info_2 = read_json(os.path.join(ROOT_PATH, "Locations", "shots.json"))
         v_shots = [shot for shot in info_2.keys()]
         
         data = []

@@ -1,19 +1,20 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 import openai
 from openai import OpenAI
 
 
-api_key = "xxxxxxxxxxxxxx"
-organization = "xxxxxxxxxxxxxx"
+# api_key = "xxxxxxxxxxxxxx"
+# organization = "xxxxxxxxxxxxxx"
 
 def GPTCall(prompt):
     counter = 0
     result = "api调用失败"
     while counter < 3:
         try:
-            openai.api_key = api_key
-            openai.organization = organization
-            client = OpenAI(api_key = api_key, organization = organization)
+            client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE"))
             completion = client.chat.completions.create(
                 model = "gpt-4o",
                 # model = "gpt-3.5-turbo",

@@ -16,15 +16,15 @@ torch.set_float32_matmul_precision('high')
 
 chat = ChatTTS.Chat()
 # compile=True works well, but is slower
-chat.load_models(source='custom', custom_path=os.path.join(ROOT, "model/ChatTTS"), compile=False)
+chat.load_models(source='custom', custom_path=os.path.join(ROOT, "model", "ChatTTS"), compile=False)
 
 
 spk = {"male": [], "female": []}
-male_path = os.path.join(ROOT, "spk/male")
+male_path = os.path.join(ROOT, "spk", "male")
 for file in os.listdir(male_path):
     t = torch.load(os.path.join(male_path, file))
     spk['male'].append(t)
-female_path = os.path.join(ROOT, "spk/female")
+female_path = os.path.join(ROOT, "spk", "female")
 for file in os.listdir(female_path):
     t = torch.load(os.path.join(female_path, file))
     spk['female'].append(t)

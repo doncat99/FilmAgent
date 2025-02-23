@@ -3,7 +3,7 @@ from LLMCaller import *
 from typing import Dict, List, Union
 
 # TO DO
-ROOT_PATH = "/path/to/FilmAgent"
+ROOT_PATH = "/Users/huangdon/Documents/FilmAgent/FilmAgent"
 # TO DO
 
 topics=["Reconcilation in a friend reunion", "A quarrel and breakup scene", "Casual meet-up with an old friend", "Emergency meeting after a security breach", "Late night brainstorming for a startup", "Family argument during dinner", "Emotional farewell at the roadside", "Heated debate over investments in the office", "Heated family discussion ending in a heartfelt apology", "Office gossip turning into a major understanding", "Celebratory end of project cheers with team members", "Planning a secret escape from a mundane routine", "Unexpected guest crashes a small house party", "An employee's emotional breakdown after being terminated", "Confession of a long-held secret among close friends"]
@@ -12,11 +12,11 @@ class FilmCrafter:
     
     def __init__(self, topic: str, ID) -> None:
         self.topic = topic
-        self.store_path = os.path.join(ROOT_PATH, f"store\cot\{ID}")
+        self.store_path = os.path.join(ROOT_PATH, "store", "cot", f"{ID}")
         self.log_path = os.path.join(self.store_path, "prompt.txt")
         self.profile_path = os.path.join(self.store_path, "actors_profile.json") 
-        self.action_description_path = os.path.join(ROOT_PATH, "Locations\\actions.txt")
-        self.shot_description_path = os.path.join(ROOT_PATH, "Locations\\shots.txt")
+        self.action_description_path = os.path.join(ROOT_PATH, "Locations", "actions.txt")
+        self.shot_description_path = os.path.join(ROOT_PATH, "Locations", "shots.txt")
         self.script_path = os.path.join(self.store_path, "script.json")
 
         # The maximum number of characters in a film
@@ -27,7 +27,7 @@ class FilmCrafter:
         
 
     def call(self, identity: str, params: Dict, trans2json: bool = True) -> Union[str, dict, list]:
-        prompt = read_prompt(os.path.join(ROOT_PATH, f"Prompt\COT_Prompt\{identity}.txt") )
+        prompt = read_prompt(os.path.join(ROOT_PATH, "Prompt", "COT_Prompt", f"{identity}.txt") )
         prompt = prompt_format(prompt, params)
         log_prompt(self.log_path, prompt)
         result = GPTCall(prompt)
