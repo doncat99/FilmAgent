@@ -8,7 +8,7 @@ import json
 import os
 
 app = FastAPI()
-ROOT = "/Path to/TTS"
+ROOT = "/Users/huangdon/Documents/FilmAgent/TTS"
 
 torch._dynamo.config.cache_size_limit = 64
 torch._dynamo.config.suppress_errors = True
@@ -16,17 +16,23 @@ torch.set_float32_matmul_precision('high')
 
 chat = ChatTTS.Chat()
 # compile=True works well, but is slower
-chat.load_models(source='custom', custom_path=os.path.join(ROOT, "model", "ChatTTS"), compile=False)
+chat.load(source='local', custom_path=os.path.join(ROOT, "model", "ChatTTS"), compile=True)
 
+if torch.backends.mps.is_available():
+    device = torch.device('mps')
+elif torch.cuda.is_available():
+    device = torch.device('cuda')
+else:
+    device = torch.device('cpu')
 
 spk = {"male": [], "female": []}
 male_path = os.path.join(ROOT, "spk", "male")
 for file in os.listdir(male_path):
-    t = torch.load(os.path.join(male_path, file))
+    t = torch.load(os.path.join(male_path, file), map_location=device)
     spk['male'].append(t)
 female_path = os.path.join(ROOT, "spk", "female")
 for file in os.listdir(female_path):
-    t = torch.load(os.path.join(female_path, file))
+    t = torch.load(os.path.join(female_path, file), map_location=device)
     spk['female'].append(t)
     
     

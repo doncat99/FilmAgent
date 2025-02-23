@@ -6,16 +6,16 @@ from util import *
 from tqdm import tqdm
 from LLMCaller import GPTTTS
 # TO DO
-Script_path = f"/path/to/script.json"
-actos_path = f"/path/to/actors_profile.json"
-Audio_path = f"The path to the folder where the audio files are stored."
+Script_path = f"/Users/huangdon/Documents/FilmAgent/FilmAgent/Script/script.json"
+actos_path = f"/Users/huangdon/Documents/FilmAgent/FilmAgent/Script/actors_profile.json"
+Audio_path = f"/Users/huangdon/Documents/FilmAgent/FilmAgent/Audio/"
 # TO DO
 if not os.path.exists(Audio_path):
     os.makedirs(Audio_path)
 
 
 # ChatTTS
-url = "http://xxx.xxx.xxx.xxx:xxxx/" # The API path where the chattts service is deployed
+url = "http://0.0.0.0:8080" # The API path where the chattts service is deployed
 Chat_Speaker_female = [0, 1, 2, 3, 4]
 Chat_Speaker_male = [0, 1, 2, 3, 4]
 random.shuffle(Chat_Speaker_female) 

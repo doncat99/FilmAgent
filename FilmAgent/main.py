@@ -33,7 +33,7 @@ class FilmCrafter:
         # + shot (stage3_verify)
         self.scene_path_7 = os.path.join(ROOT_PATH, "Script", "scenes_8.json") 
         # The final script
-        self.script_path = cretae_new_path(os.path.join(ROOT_PATH, "Script", "script"), "json")
+        self.script_path = cretae_new_path(os.path.join(ROOT_PATH, "Script", "script.json"))
         
         # director's shot annotation
         self.director_shot_path = os.path.join(ROOT_PATH, "Script", "director_shot.json")
